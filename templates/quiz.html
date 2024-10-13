@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        /* Basit stil eklemeleri */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .highscore {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 50px;
+            border-top: 1px solid #ccc;
+            padding-top: 10px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="highscore">
+        Highscore: {{ highscore }}
+    </div>
+    <h1>Quiz</h1>
+    <form method="POST" action="{{ url_for('submit_quiz') }}">
+        {% for question in questions %}
+            {% set q_index = loop.index0 %}
+            <div class="question">
+                <p>{{ loop.index }}. {{ question['question'] }}</p>
+                {% for option in question['options'] %}
+                    <input type="radio" id="question-{{ q_index }}-{{ loop.index }}" name="question-{{ q_index }}" value="{{ option }}" required>
+                    <label for="question-{{ q_index }}-{{ loop.index }}">{{ option }}</label><br>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit">Gönder</button>
+    </form>
+
+    <footer>
+        <p>Yazar: Alper Doğramacı</p>
+    </footer>
+</body>
+</html>
